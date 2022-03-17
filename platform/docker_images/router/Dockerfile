@@ -117,6 +117,9 @@ RUN ldconfig
 
 RUN mkdir -p /root/.ssh
 
+# nfdump
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  nfdump fprobe
+
 # Add startup script and set it as entrypoint
 COPY docker-start /usr/sbin/docker-start
 COPY looking_glass.sh /home/.looking_glass.sh
