@@ -78,13 +78,13 @@ WORKDIR /libyang/build
 # As a reference, previously we used libyang devel branch commit 27f0eb9bc5a3dd7fac5b40cf9ca8335505b7a0ad (v 1.0.228)
 RUN git checkout v1.0.240
 RUN cmake -DENABLE_LYD_PRIV=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr -D CMAKE_BUILD_TYPE:String="Release" ..
-RUN make
+RUN make -j16
 RUN make install
 RUN ldconfig
 WORKDIR /frr
 
 RUN ./configure --enable-exampledir=/usr/share/doc/frr/examples/ --localstatedir=/var/opt/frr --enable-user=frr --enable-group=frr --enable-vty-group=frrvty --disable-doc --localstatedir=/var/run/frr --sbindir=/usr/lib/frr --sysconfdir=/etc/frr --enable-systemd
-RUN make
+RUN make -j16
 RUN make check
 RUN make install
 
@@ -116,6 +116,9 @@ RUN echo include /usr/local/lib >> /etc/ld.so.conf
 RUN ldconfig
 
 RUN mkdir -p /root/.ssh
+RUN mkdir -p /home/bgpdump/ribs
+RUN mkdir -p /home/bgpdump/updates 
+RUN chmod 777 -R /home/bgpdump/
 
 # nfdump
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  nfdump fprobe

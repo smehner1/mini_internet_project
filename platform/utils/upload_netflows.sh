@@ -35,7 +35,7 @@ do
         #rsync -a groups/g"${group_number}"/netflow/* $WEBSERVER_LOCATION/netflow/G$group_number/ || true
 
         # e.g. 83_IXP
-        docker cp "${group_number}"_"IXP":/home/netflow/. $WEBSERVER_LOCATION/netflow/G$group_number/ 
+        docker cp "${group_number}"_"IXP":/home/netflow/. $WEBSERVER_LOCATION/netflow/G"${group_number}"/ 
 	    #find groups/g"${group_number}"/netflow -type f -mtime +1 -delete
 	else
 	    readarray routers < config/$group_router_config

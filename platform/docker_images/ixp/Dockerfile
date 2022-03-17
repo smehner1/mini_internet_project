@@ -7,6 +7,10 @@ RUN apt-get update && apt-get install -y curl wget openvswitch-switch openvswitc
 RUN echo "export VTYSH_PAGER=more" >>  /etc/bash.bashrc
 RUN echo "VTYSH_PAGER=more" >> /etc/environment
 
+RUN mkdir -p /home/bgpdump/ribs
+RUN mkdir -p /home/bgpdump/updates 
+RUN chmod 777 -R /home/bgpdump/
+
 RUN	touch /etc/quagga/bgpd.conf && \
 	touch /etc/quagga/ospfd.conf && \
 	touch /etc/quagga/vtysh.conf && \

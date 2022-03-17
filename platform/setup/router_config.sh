@@ -84,6 +84,10 @@ for ((k=0;k<group_numbers;k++));do
 
             echo "#!/bin/bash" >> "${location}"
             echo "vtysh  -c 'conf t' \\" >> "${location}"
+
+            echo " -c 'dump bgp updates /home/bgpdump/updates/updates.${group_number}.%Y%m%d-%H%M 30m' \\" >> "${location}"
+	        echo " -c 'dump bgp routes-mrt /home/bgpdump/ribs/rib.${group_number}.%Y%m%d-%H%M 30m' \\" >> "${location}"
+
             echo " -c 'interface lo' \\" >> "${location}"
             echo " -c 'ip address "$(subnet_router "${group_number}" "${i}")"' \\" >> "${location}"
             echo " -c 'exit' \\" >> "${location}"
@@ -162,6 +166,11 @@ for ((k=0;k<group_numbers;k++));do
 
         echo "#!/bin/bash" >> "${location}"
         echo "vtysh  -c 'conf t' \\" >> "${location}"
+
+        # RIB and BGP update dumps stored every 30 min
+        echo " -c 'dump bgp updates /home/bgpdump/updates/updates.${group_number}.%Y%m%d-%H%M 30m' \\" >> "${location}"
+    	echo " -c 'dump bgp routes-mrt /home/bgpdump/ribs/rib.${group_number}.%Y%m%d-%H%M 30m' \\" >> "${location}"
+        
         echo "-c 'bgp multiple-instance' \\" >> "${location}"
 
         for ((i=0;i<n_extern_links;i++)); do
