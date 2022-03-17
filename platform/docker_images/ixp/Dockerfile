@@ -13,6 +13,7 @@ RUN	touch /etc/quagga/bgpd.conf && \
 	touch /etc/quagga/zebra.conf
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  nfdump fprobe
+COPY init-nf.sh /usr/sbin/init-nf.sh
 
 # Add startup script and set it as entrypoint
 ADD docker-start /usr/sbin/docker-start

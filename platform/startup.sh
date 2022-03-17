@@ -100,10 +100,10 @@ echo ""
 # we can build this images and push it to docker hub
 # or build it manually beforehand the startup will use the containers
 # thats the way we go for not
-echo "build router and ixp docker image $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
-echo "build router and ixp docker image: "
-sudo docker build --no-cache -t "thomahol/d_router:latest" ./docker_images/router/
-sudo docker build --no-cache -t "thomahol/d_ixp:latest" ./docker_images/ixp/
+# echo "build router and ixp docker image $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
+# echo "build router and ixp docker image: "
+# sudo docker build --no-cache -t "thomahol/d_router:latest" ./docker_images/router/
+# sudo docker build --no-cache -t "thomahol/d_ixp:latest" ./docker_images/ixp/
 
 echo ""
 echo ""
@@ -232,6 +232,13 @@ echo ""
 echo "router_config.sh: "
 echo "router_config.sh $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
 time ./setup/router_config.sh "${DIRECTORY}"
+
+echo ""
+echo ""
+
+echo "netflow_start.sh: "
+echo "netflow_start.sh $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
+time ./setup/netflow_start.sh "${DIRECTORY}"
 
 echo ""
 echo ""

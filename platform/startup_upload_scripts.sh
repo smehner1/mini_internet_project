@@ -8,7 +8,10 @@ echo
 ### start matrix upload script in screen
 
 echo "start screen sessions"
-for serv in upload_matrix upload_looking_glass ; do #upload_bgpdumps upload_netflows ; do
+for serv in upload_matrix upload_looking_glass upload_netflows; do #upload_bgpdumps  ; do
+    echo " - try to kill $serv session"
+    sudo screen -x $serv -X quit
+
     echo " - start $serv screen session"
     sudo screen -d -m -S $serv ./utils/$serv.sh 
 done

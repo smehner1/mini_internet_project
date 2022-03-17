@@ -122,6 +122,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  nfdump fprobe
 
 # Add startup script and set it as entrypoint
 COPY docker-start /usr/sbin/docker-start
+COPY init-nf.sh /usr/sbin/init-nf.sh
 COPY looking_glass.sh /home/.looking_glass.sh
 RUN chmod +x /usr/sbin/docker-start
 ENTRYPOINT ["/usr/sbin/docker-start"]

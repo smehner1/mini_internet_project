@@ -136,6 +136,8 @@ for ((k=0;k<group_numbers;k++)); do
                 -v "${location}"/looking_glass_json.txt:/home/looking_glass_json.txt \
                 -v "${location}"/daemons:/etc/frr/daemons \
                 -v "${location}"/frr.conf:/etc/frr/frr.conf \
+                # -v "${location}"/bgpdump:/home/bgpdump \
+                # -v "${location}"/netflow:/home/netflow \
                 -v /etc/timezone:/etc/timezone:ro \
                 -v /etc/localtime:/etc/localtime:ro thomahol/d_router
 
@@ -178,6 +180,8 @@ for ((k=0;k<group_numbers;k++)); do
             -v /etc/timezone:/etc/timezone:ro \
             -v /etc/localtime:/etc/localtime:ro \
             -v "${location}"/looking_glass.txt:/home/looking_glass.txt \
+            # -v "${location}"/bgpdump:/home/bgpdump \
+            # -v "${location}"/netflow:/home/netflow \
             thomahol/d_ixp
 
        CONTAINERS+=("${group_number}""_IXP")
