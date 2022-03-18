@@ -9,7 +9,7 @@ df = pd.read_csv(csv_file, header=None, names=["date", "disk", "inode"], sep=" "
 df['date']=pd.to_datetime(df['date'])
 
 
-df.set_index('date').plot.line(y=["disk" ,"inode"])
+df.set_index('date').plot.line(y=["disk" ,"inode"], title="Disk Usage", ylabel="%")
 
 
-plt.savefig("./stats/disk_usage.png")
+plt.savefig("/var/www/html/stats/disk_usage.png")

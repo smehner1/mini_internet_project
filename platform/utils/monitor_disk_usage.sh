@@ -17,6 +17,7 @@ do
     echo "$current_date $disk_usage $inode_usage" >> "$LOG_FILE"
 
     ./utils/plot_disk_usage.py
+    sudo chown www-data:www-data /var/www/html/stats/disk_usage.png
 
     echo "sleep"
     sleep $SLEEP

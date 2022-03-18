@@ -41,6 +41,8 @@ do
     done
 
     ./utils/plot_group_activity.py
+    sudo chown www-data:www-data /var/www/html/stats/group_activity.png
+
 
     echo >> $LOG_FILE
     echo "sleep"

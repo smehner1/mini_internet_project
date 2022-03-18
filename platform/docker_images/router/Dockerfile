@@ -122,6 +122,7 @@ RUN mkdir -p /home/netflow
 
 RUN chmod 777 -R /home/bgpdump/
 
+
 # nfdump
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  nfdump fprobe
 
