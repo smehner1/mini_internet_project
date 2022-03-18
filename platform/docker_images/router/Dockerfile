@@ -118,6 +118,8 @@ RUN ldconfig
 RUN mkdir -p /root/.ssh
 RUN mkdir -p /home/bgpdump/ribs
 RUN mkdir -p /home/bgpdump/updates 
+RUN mkdir -p /home/netflow
+
 RUN chmod 777 -R /home/bgpdump/
 
 # nfdump

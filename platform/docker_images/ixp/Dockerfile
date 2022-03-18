@@ -9,6 +9,7 @@ RUN echo "VTYSH_PAGER=more" >> /etc/environment
 
 RUN mkdir -p /home/bgpdump/ribs
 RUN mkdir -p /home/bgpdump/updates 
+RUN mkdir -p /home/netflow
 RUN chmod 777 -R /home/bgpdump/
 
 RUN	touch /etc/quagga/bgpd.conf && \
