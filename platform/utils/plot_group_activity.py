@@ -28,5 +28,5 @@ df = pd.read_csv(csv_file, header=None, sep=" ", names=group_names)
 df['date']=pd.to_datetime(df['date'])
 
 
-df.plot.line(y=group_names[1:],  title="Group Activity", ylabel="bash history")
+df.plot.line(y=group_names[1:],  title="Group Activity", ylabel="bash history", ylim=(0,500))
 plt.savefig("/var/www/html/stats/group_activity.png")
