@@ -3,7 +3,7 @@
 LOG_FILE="./stats/disk_usage.csv"
 
 SLEEP=86400 # 1 day = 24* 60 *60
-DEVICE="/dev/sda2"
+DEVICE="/var/www/html"
 DATE_FORMAT="%Y-%m-%d" #_%H-%M-%S" 
 
 while true

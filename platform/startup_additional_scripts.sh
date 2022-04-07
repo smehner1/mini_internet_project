@@ -13,7 +13,7 @@ sudo rm -Rf /var/www/html/bgpdump
 sudo rm -Rf /var/www/html/looking_glass
 
 echo "start screen sessions"
-for serv in upload_matrix upload_looking_glass upload_netflows upload_bgpdumps delete_old_nf_and_bgp monitor_disk_usage monitor_group_actvitiy; do 
+for serv in upload_matrix upload_looking_glass upload_netflows upload_bgpdumps delete_old_nf_and_bgp monitor_disk_usage monitor_group_actvitiy connectivity_matrix_history; do 
     echo " - try to kill $serv session"
     sudo screen -x $serv -X quit
 
