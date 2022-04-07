@@ -19,7 +19,7 @@ WEBSERVER_LOCATION="/var/www/html"
 while true
 do
     current_date=$(date +$DATE_FORMAT)
-    echo -n "$current_date " >> $LOG_FILE
+    echo -n "$current_date" >> $LOG_FILE
 
     echo "get LOCs from ssh container of each group"
     for ((k=0;k<group_numbers;k++)); do
@@ -35,7 +35,7 @@ do
       if [ "${group_config}" == "NoConfig" ];then
         sudo docker exec "${group_number}"_ssh touch /root/.bash_history
         hist_len=$(sudo docker exec "${group_number}"_ssh cat /root/.bash_history 2> /dev/null | wc -l)
-        echo -n "$hist_len " >> $LOG_FILE
+        echo -n " $hist_len" >> $LOG_FILE
 
       fi
     done
