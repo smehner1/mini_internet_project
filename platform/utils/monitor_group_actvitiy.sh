@@ -14,7 +14,7 @@ readarray groups < config/AS_config.txt
 group_numbers=${#groups[@]}
 
 WEBSERVER_LOCATION="/var/www/html"
-
+rm $LOG_FILE
 
 while true
 do

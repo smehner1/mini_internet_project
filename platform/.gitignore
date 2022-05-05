@@ -1,4 +1,4 @@
 groups
-config
+config_*
 log.txt
 openvpn-status.log

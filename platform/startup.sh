@@ -6,6 +6,12 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+sudo sysctl fs.inotify.max_user_instances=1024
+sudo sysctl fs.inotify.max_user_watches=524288
+sudo service docker stop
+sudo service docker start
+sudo chmod u=rwx,g=rx,o=rx /var/lib/docker
+
 # Check for programs we'll need.
 search_path () {
     save_IFS=$IFS
@@ -96,14 +102,18 @@ time ./setup/save_configs.sh "${DIRECTORY}"
 echo ""
 echo ""
 
-# for netflow and bgpdumps we need  nfdump and fprobe
-# we can build this images and push it to docker hub
-# or build it manually beforehand the startup will use the containers
-# thats the way we go for not
-# echo "build router and ixp docker image $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
-# echo "build router and ixp docker image: "
-sudo docker build --no-cache -t "thomahol/d_router:latest" ./docker_images/router/
-sudo docker build --no-cache -t "thomahol/d_ixp:latest" ./docker_images/ixp/
+
+# for i in "thomahol/d_router:latest" "thomahol/d_ixp:latest"; do 
+
+#     check_it=$(sudo docker images | grep $i)
+
+#     if [ -n $check_it ]; then
+#         echo "not found $i"
+#     else 
+#         echo "found $i"
+#         sudo docker build --no-cache -t $i ./docker_images/router/
+#     fi
+# done
 
 echo ""
 echo ""
@@ -112,6 +122,16 @@ echo "container_setup.sh $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
 echo "container_setup.sh: "
 time ./setup/container_setup.sh "${DIRECTORY}"
 
+# for netflow and bgpdumps we need  nfdump and fprobe
+# we can build this images and push it to docker hub
+# or build it manually beforehand the startup will use the containers
+# thats the way we go for not
+# echo "build router and ixp docker image $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
+# echo "build router and ixp docker image: "
+
+
+# sudo docker build --no-cache -t "thomahol/d_router:latest" ./docker_images/router/
+# sudo docker build --no-cache -t "thomahol/d_ixp:latest" ./docker_images/ixp/
 echo ""
 echo ""
 

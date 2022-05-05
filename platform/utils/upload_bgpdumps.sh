@@ -14,6 +14,7 @@ readarray groups < config/AS_config.txt
 group_numbers=${#groups[@]}
 
 WEBSERVER_LOCATION="/var/www/html"
+bgpdump_folder="/home/bgpdump"
 
 while true
 do
@@ -30,7 +31,9 @@ do
 	if [ "${group_as}" == "IXP" ];then
         mkdir -pv $WEBSERVER_LOCATION/bgpdump/G"${group_number}"
 
-        docker cp "${group_number}"_"IXP":/home/bgpdump/. $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/ 
+        echo "${group_number}"_"IXP"
+        docker cp "${group_number}"_"IXP":$bgpdump_folder/. $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/ 
+        #docker exec "${group_number}"_"IXP" mkdir -p $bgpdump_folder; rm -rf $bgpdump_folder; mkdir -p $bgpdump_folder;
 	    
         #rsync -a groups/g"${group_number}"/bgpdump/* $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/ || true
 	    #find groups/g"${group_number}"/bgpdump -type f -mtime +1 -delete
@@ -45,9 +48,10 @@ do
 
                 # create folder at webserver if not existing 
                 mkdir -pv $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/"${rname}"/ 
-  
-                docker cp "${group_number}"_"${rname}"router:/home/bgpdump/. $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/"${rname}"/ 
 
+                echo "${group_number}"_"${rname}"router
+                docker cp "${group_number}"_"${rname}"router:$bgpdump_folder/. $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/"${rname}"/ 
+                #docker exec "${group_number}"_"${rname}"router mkdir -p $bgpdump_folder; rm -rf $bgpdump_folder; mkdir -p $bgpdump_folder;
     	    	#rsync -a "${location}"/bgpdump/* $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/"${rname}"/ || true
 		        #find "${location}"/bgpdump/ -type f -mtime +1 -delete
             done
@@ -57,11 +61,11 @@ do
 
 	#processing
         for file in $(find $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/ -type f ! -name "*.txt"); do
-                echo $file
+                # echo $file
                 if [ ! -f "${file}".txt ]; then
-			touch ${file}.txt
-    			chmod ugo+r -R ${file} ${file}.txt
-                        bgpdump "${file}" > "${file}".txt &
+			        touch ${file}.txt
+    			    chmod ugo+r -R ${file} ${file}.txt
+                    bgpdump "${file}" > "${file}".txt &
                 fi
         done
         wait

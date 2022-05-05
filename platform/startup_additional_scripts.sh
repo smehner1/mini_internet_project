@@ -1,10 +1,12 @@
 #!/bin/bash
 
+KILL=0
 
-### start ping.py in matrix container
-echo "start ping.py script in matrix docker container"
-sudo docker exec MATRIX tmux new-session -d -s ping 'cd /home; python ping.py'
-echo
+if [ $1 == "kill" ]; then
+   echo "kill only"
+    KILL=1
+fi
+
 ### start matrix upload script in screen
 
 echo "delete old netflow, bgpdump and looking_glass data at webserver location"
@@ -13,12 +15,21 @@ sudo rm -Rf /var/www/html/bgpdump
 sudo rm -Rf /var/www/html/looking_glass
 
 echo "start screen sessions"
-for serv in upload_matrix upload_looking_glass upload_netflows upload_bgpdumps delete_old_nf_and_bgp monitor_disk_usage monitor_group_actvitiy connectivity_matrix_history; do 
-    echo " - try to kill $serv session"
-    sudo screen -x $serv -X quit
 
-    echo " - start $serv screen session"
-    sudo screen -d -m -S $serv ./utils/$serv.sh 
+#  delete_old_nf_and_bgp 
+for serv in upload_matrix upload_looking_glass upload_netflows upload_bgpdumps monitor_disk_usage connectivity_matrix_history monitor_group_actvitiy analyze_bgp_policies; do 
+    if [ $KILL == 1 ]; then
+        sudo screen -x $serv -X quit
+    else
+
+        if sudo screen -ls |grep -q $serv; then
+            echo found $serv
+        else
+            echo $serv not found
+            echo " - start $serv screen session"
+            sudo screen -d -m -S $serv ./utils/$serv.sh 
+        fi
+    fi
 done
 echo
 
