@@ -6,10 +6,12 @@ mkdir -p $WEBSERVER_LOCATION/matrix
 
 ### start ping.py in matrix container
 echo "start ping.py script in matrix docker container"
-if [ -n "$(sudo docker exec MATRIX tmux list-sessions | grep ping)" ]; then
-    sudo docker exec MATRIX tmux kill-session -t ping
-fi
+# if [ -n "$(sudo docker exec MATRIX tmux list-sessions | grep ping)" ]; then
+#     sudo docker exec MATRIX tmux kill-session -t ping
+# fi
+
 sudo docker exec MATRIX tmux new-session -d -s ping 'cd /home; python ping.py'
+
 echo
 
 while true
