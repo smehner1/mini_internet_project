@@ -42,7 +42,7 @@ for ((k=0;k<group_numbers;k++)); do
 
         # start ssh container
         docker run -itd --net='none'  --name="${group_number}""_ssh" \
-            --cpus=2 --pids-limit 100 --hostname="g${group_number}-proxy" --cap-add=NET_ADMIN \
+            --cpus=2 --pids-limit 200 --hostname="g${group_number}-proxy" --cap-add=NET_ADMIN \
             -v "${location}"/goto.sh:/root/goto.sh  \
             -v "${location}"/save_configs.sh:/root/save_configs.sh \
             -v /etc/timezone:/etc/timezone:ro \
@@ -131,7 +131,7 @@ for ((k=0;k<group_numbers;k++)); do
                 --sysctl net.mpls.platform_labels=1048575 \
                 --cap-add=ALL \
                 --cap-drop=SYS_RESOURCE \
-                --cpus=2 --pids-limit 100 --hostname "${rname}""_router" \
+                --cpus=2 --pids-limit 1000 --hostname "${rname}""_router" \
                 -v "${location}"/looking_glass.txt:/home/looking_glass.txt \
                 -v "${location}"/looking_glass_json.txt:/home/looking_glass_json.txt \
                 -v "${location}"/daemons:/etc/frr/daemons \
@@ -162,7 +162,7 @@ for ((k=0;k<group_numbers;k++)); do
 
         location="${DIRECTORY}"/groups/g"${group_number}"
         docker run -itd --net='none' --name="${group_number}""_IXP" \
-            --pids-limit 100 --hostname "${group_number}""_IXP" \
+            --pids-limit 200 --hostname "${group_number}""_IXP" \
             -v "${location}"/daemons:/etc/quagga/daemons \
             --privileged \
             --sysctl net.ipv4.ip_forward=1 \

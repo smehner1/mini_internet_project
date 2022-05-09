@@ -38,7 +38,7 @@ do
         echo "${group_number}"_"IXP"
         # e.g. 83_IXP
         docker cp "${group_number}"_"IXP":/home/netflow/. $WEBSERVER_LOCATION/netflow/G"${group_number}"/ 
-        #docker exec "${group_number}"_"IXP" mkdir -p $netflow_folder; rm -rf $netflow_folder; mkdir -p $netflow_folder
+        docker exec "${group_number}"_"IXP" mkdir -p $netflow_folder; rm -rf $netflow_folder; mkdir -p $netflow_folder
 	else
 	    readarray routers < config/$group_router_config
             n_routers=${#routers[@]}
@@ -55,9 +55,7 @@ do
     		    #rsync -a "${location}"/netflow/*  $WEBSERVER_LOCATION/netflow/G"${group_number}"/"${rname}"/ || true
                 # e.g. 1_GENErouter or 2_MIAMrouter
                 docker cp "${group_number}"_"${rname}"router:/home/netflow/. $WEBSERVER_LOCATION/netflow/G"${group_number}"/"${rname}"/ 
-                # docker exec "${group_number}"_"${rname}"router mkdir -p $netflow_folder
-                # docker exec "${group_number}"_"${rname}"router rm -rf $netflow_folder
-                # docker exec "${group_number}"_"${rname}"router mkdir -p $netflow_folder
+                docker exec "${group_number}"_"${rname}"router mkdir -p $netflow_folder; rm -rf $netflow_folder; mkdir -p $netflow_folder
 		        #find "${location}"/netflow/ -type f -mtime +1 -delete
             done
 	fi

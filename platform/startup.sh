@@ -2,11 +2,22 @@
 #
 # starts whole network
 
-FORCE_REMOVE_ALL=1
+FORCE_REMOVE_ALL=0
 
 if [ $FORCE_REMOVE_ALL == 1 ]; then
     sudo docker system prune  --all --force
     sudo docker image prune  --all --force
+
+    echo ""
+    echo ""
+
+    # for netflow and bgpdumps we need  nfdump and fprobe
+    # we can build this images and push it to docker hub
+    # or build it manually beforehand the startup will use the containers
+    # thats the way we go for not
+    echo "build router and ixp docker image $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
+    echo "build router and ixp docker image: "
+    # parallel sudo docker build --no-cache -t "thomahol/d_{1}:latest" ./docker_images/{1}/ ::: router ixp 
 fi
 
 set -o errexit
@@ -106,17 +117,6 @@ echo ""
 echo "save_configs.sh $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
 echo "save_configs.sh: "
 time ./setup/save_configs.sh "${DIRECTORY}"
-
-echo ""
-echo ""
-
-# for netflow and bgpdumps we need  nfdump and fprobe
-# we can build this images and push it to docker hub
-# or build it manually beforehand the startup will use the containers
-# thats the way we go for not
-echo "build router and ixp docker image $(($(date +%s%N)/1000000))" >> "${DIRECTORY}"/log.txt
-echo "build router and ixp docker image: "
-parallel sudo docker build --no-cache -t "thomahol/d_{1}:latest" ./docker_images/{1}/ ::: router ixp 
 
 
 echo ""

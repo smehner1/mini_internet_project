@@ -33,7 +33,7 @@ do
 
         echo "${group_number}"_"IXP"
         docker cp "${group_number}"_"IXP":$bgpdump_folder/. $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/ 
-        #docker exec "${group_number}"_"IXP" mkdir -p $bgpdump_folder; rm -rf $bgpdump_folder; mkdir -p $bgpdump_folder;
+        docker exec "${group_number}"_"IXP" mkdir -p $bgpdump_folder; rm -rf $bgpdump_folder; mkdir -p $bgpdump_folder;
 	    
         #rsync -a groups/g"${group_number}"/bgpdump/* $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/ || true
 	    #find groups/g"${group_number}"/bgpdump -type f -mtime +1 -delete
@@ -51,7 +51,7 @@ do
 
                 echo "${group_number}"_"${rname}"router
                 docker cp "${group_number}"_"${rname}"router:$bgpdump_folder/. $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/"${rname}"/ 
-                #docker exec "${group_number}"_"${rname}"router mkdir -p $bgpdump_folder; rm -rf $bgpdump_folder; mkdir -p $bgpdump_folder;
+                docker exec "${group_number}"_"${rname}"router mkdir -p $bgpdump_folder; rm -rf $bgpdump_folder; mkdir -p $bgpdump_folder;
     	    	#rsync -a "${location}"/bgpdump/* $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/"${rname}"/ || true
 		        #find "${location}"/bgpdump/ -type f -mtime +1 -delete
             done
