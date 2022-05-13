@@ -3,7 +3,7 @@
 WEBSERVER_LOCATION="/var/www/html"
 POLICY_ANALYZER_FOLDER="./utils/bgp_policy_analyzer"
 
-python3 ./$POLICY_ANALYZER_FOLDER/cfparse.py ./config/
+python3 $POLICY_ANALYZER_FOLDER/cfparse.py ./config/
 
 while true
 do
