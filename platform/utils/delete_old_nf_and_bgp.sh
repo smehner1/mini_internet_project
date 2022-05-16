@@ -9,10 +9,12 @@ while true
 do
     for i in netflow bgpdump; do
         echo "delete old $i data"
-        find $WEBSERVER_LOCATION/$i/ -maxdepth 10 -type f  -mtime +$AFTER_DAYS -print -delete
+        find $WEBSERVER_LOCATION/$i/ -maxdepth 10 -type f  -mtime +$AFTER_DAYS -print 
+        find $WEBSERVER_LOCATION/$i/ -maxdepth 10 -type f  -mtime +$AFTER_DAYS -exec rm {} \;
 
         echo "delete empty folders"
-        find $WEBSERVER_LOCATION/$i/ -maxdepth 10 -type d -empty -print -delete
+        find $WEBSERVER_LOCATION/$i/ -maxdepth 10 -type d -empty -print 
+        find $WEBSERVER_LOCATION/$i/ -maxdepth 10 -type d -empty -delete
         echo
     done
 

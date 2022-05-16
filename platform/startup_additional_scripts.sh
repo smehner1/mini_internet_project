@@ -16,8 +16,8 @@ sudo rm -Rf /var/www/html/looking_glass
 
 echo "start screen sessions"
 
-#  delete_old_nf_and_bgp 
-for serv in upload_matrix upload_looking_glass upload_netflows upload_bgpdumps monitor_disk_usage connectivity_matrix_history monitor_group_actvitiy analyze_bgp_policies monitor_disk_usage_alert; do 
+#   
+for serv in upload_matrix upload_looking_glass upload_netflows upload_bgpdumps monitor_disk_usage connectivity_matrix_history monitor_group_actvitiy analyze_bgp_policies monitor_disk_usage_alert delete_old_nf_and_bgp; do 
     if [ $KILL == 1 ]; then
         sudo screen -x $serv -X quit
     else

@@ -15,7 +15,7 @@ csv_files= [csv_file_hist_loc, csv_file_login_count, csv_file_login_duration]
 
 # get group names form AS_config -> all groups with NoConfig
 
-fig, ax = plt.subplots(3, 1, sharex=True, figsize=(10,8))
+fig, ax = plt.subplots(3, 1, sharex=True, figsize=(8,8))
 
 group_names=['date']
 
@@ -49,4 +49,6 @@ for cur_csv in csv_files:
 
 ax[0].legend(loc='upper center', bbox_to_anchor=(0.5, 1.05),
           ncol=6, fancybox=True)
+plt.suptitle("Group activity")
+plt.tight_layout()
 plt.savefig(output)
