@@ -3,3 +3,4 @@ config_*
 log.txt
 openvpn-status.log
 as.db
+.vscode

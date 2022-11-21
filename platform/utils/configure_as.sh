@@ -1,10 +1,10 @@
 # This script is used to configure an ASes that was originally not pre-configure (NoConfig)
 # The Layer2 network is not configured, only the L3 network as well as the hosts
 
-for group_number in 1
+for group_number in 8
 do
     rid=1
-    for router_name in NEWY OND COTT BARC ACCR NEWY SAOP SANF MIAM
+    for router_name in LOND COTT BARC ACCR NEWY SAOP SANF MIAM
     do
         docker cp groups/g${group_number}/${router_name}/init_full_conf.sh ${group_number}_${router_name}router:/home/
         docker exec -it ${group_number}_${router_name}router ./home/init_full_conf.sh

@@ -57,7 +57,7 @@ do
             done
 	fi
 
-    chown -R www-data:www-data $WEBSERVER_LOCATION/bgpdump/
+    chown -R www-data:www-data $WEBSERVER_LOCATION/bgpdump/ || echo "ERROR: chown did not work"
 
 	#processing
         for file in $(find $WEBSERVER_LOCATION/bgpdump/G"${group_number}"/ -type f ! -name "*.txt"); do
