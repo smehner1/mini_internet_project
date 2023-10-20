@@ -96,7 +96,6 @@ for l in tier1:
     for asn in l:
         all_tier1.append(str(asn))
 
-
 block_nb = 0
 for b in tier1:
     # print block_nb

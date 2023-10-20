@@ -1,5 +1,14 @@
 FROM phusion/baseimage:0.9.16
 
+RUN touch /etc/default/locale
+RUN echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
+RUN echo "LANG=en_US.UTF-8" >> /etc/default/locale
+RUN echo "LANGUAGE=en_US.UTF-8" >> /etc/default/locale
+
+RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
+RUN echo "LANG=en_US.UTF-8" >> /etc/environment
+RUN echo "LANGUAGE=en_US.UTF-8" >> /etc/environment
+
 # Install dependencies
 RUN apt-get update && apt-get install -y curl wget openvswitch-switch openvswitch-common \
      vim openssh-server inetutils-traceroute net-tools tcpdump quagga

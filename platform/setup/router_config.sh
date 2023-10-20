@@ -286,6 +286,9 @@ for ((i=0;i<n_extern_links;i++)); do
 
     else
         subnet="${row_i[8]}"
+        # echo -----------
+        # echo $subnet
+        # echo $grp_2 $router_grp_2
 
         if [ "$subnet" != "N/A" ]; then
             subnet1=${subnet%????}1/24
@@ -294,6 +297,10 @@ for ((i=0;i<n_extern_links;i++)); do
             subnet1="$(subnet_router_router_extern "${i}" 1)"
             subnet2="$(subnet_router_router_extern "${i}" 2)"
         fi
+
+        # echo $subnet1
+        # echo $subnet2
+        # echo 
 
         location1="${DIRECTORY}"/groups/g"${grp_1}"/"${router_grp_1}"/init_full_conf.sh
         echo " -c 'interface ext_"${grp_2}"_"${router_grp_2}"' \\" >> "${location1}"
@@ -345,6 +352,9 @@ for ((i=0;i<n_extern_links;i++)); do
             echo " -c 'match community 1' \\" >> "${location1}"
             echo " -c 'exit' \\" >> "${location1}"
         fi
+
+        # echo $grp_1 $router_grp_1
+        # echo -----------
 
         location2="${DIRECTORY}"/groups/g"${grp_2}"/"${router_grp_2}"/init_full_conf.sh
         echo " -c 'interface ext_"${grp_1}"_"${router_grp_1}"' \\" >> "${location2}"

@@ -114,8 +114,8 @@ for ((k=0;k<group_numbers;k++)); do
             location="${DIRECTORY}"/groups/g"${group_number}"/"${rname}"
 
             # start router
-            docker run -itd --net='none'  --dns="${subnet_dns%/*}" \
-                --name="${group_number}""_""${rname}""router" \
+            docker run -itd --net='none' --privileged --dns="${subnet_dns%/*}" \
+                --name="${group_number}"_"${rname}"router \
                 --sysctl net.ipv4.ip_forward=1 \
                 --sysctl net.ipv4.icmp_ratelimit=0 \
                 --sysctl net.ipv4.fib_multipath_hash_policy=1 \
@@ -131,7 +131,8 @@ for ((k=0;k<group_numbers;k++)); do
                 --sysctl net.mpls.platform_labels=1048575 \
                 --cap-add=ALL \
                 --cap-drop=SYS_RESOURCE \
-                --cpus=2 --pids-limit 1000 --hostname "${rname}""_router" \
+                --cpus=2 --pids-limit 3000 --hostname "${rname}"_router \
+                --mount type=bind,source=/home/max/WORK/masterthesis/mini_internet/router_files,target=/home/router_files \
                 -v "${location}"/looking_glass.txt:/home/looking_glass.txt \
                 -v "${location}"/looking_glass_json.txt:/home/looking_glass_json.txt \
                 -v "${location}"/daemons:/etc/frr/daemons \
@@ -145,11 +146,12 @@ for ((k=0;k<group_numbers;k++)); do
             if [[ ! -z "${dname}" ]];then
                 docker run -itd --net='none' --dns="${subnet_dns%/*}"  \
                     --name="${group_number}""_""${rname}""host" --cap-add=NET_ADMIN \
-                    --cpus=2 --pids-limit 100 --hostname "${rname}""_host" \
+                    --cpus=2 --pids-limit 3000 --hostname "${rname}""_host" \
                     --sysctl net.ipv4.icmp_ratelimit=0 \
                     --sysctl net.ipv4.icmp_echo_ignore_broadcasts=0 \
                     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
                     --sysctl net.ipv6.icmp.ratelimit=0 \
+                    --mount type=bind,source=/home/max/WORK/masterthesis/mini_internet/host_files,target=/home/host_files \
                     -v /etc/timezone:/etc/timezone:ro \
                     -v /etc/localtime:/etc/localtime:ro $dname
                     # add this for bgpsimple -v ${DIRECTORY}/docker_images/host/bgpsimple.pl:/home/bgpsimple.pl \

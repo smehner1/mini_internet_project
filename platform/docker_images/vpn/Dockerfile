@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 RUN apt-get update && apt-get install -y rsyslog locales vim openvpn tcpdump net-tools iputils-ping inetutils-traceroute bridge-utils
 
 # Set locale

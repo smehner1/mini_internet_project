@@ -1,1 +1,1 @@
-external_links_config_20.txt
+external_links_config_fixed.txt

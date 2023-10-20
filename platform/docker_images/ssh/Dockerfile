@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 RUN apt-get update && apt-get install -y rsyslog vim locales iputils-ping \
 	openssh-server less zip tmux screen
 

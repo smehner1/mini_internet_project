@@ -10,10 +10,14 @@ set -o nounset
 DIRECTORY="$1"
 source "${DIRECTORY}"/config/subnet_config.sh
 
-NETFLOW_DIR="/home/netflow"
+# TODO: hier den Mount-Folder verwenden
+
+# NETFLOW_DIR="/home/netflow"
+NETFLOW_DIR="/home/router_files/netflow_mini-internet"
 # One new file every 3600 secs
-NETFLOW_ROTATE_INTERVAL="3600"
-NETFLOW_SAMPLING="1"
+# NETFLOW_ROTATE_INTERVAL="300"
+NETFLOW_ROTATE_INTERVAL="60"
+NETFLOW_SAMPLING=1
 
 # read configs
 readarray groups < "${DIRECTORY}"/config/AS_config.txt
@@ -38,6 +42,10 @@ for ((k=0;k<group_numbers;k++));do
     group_router_config="${group_k[3]}"
     group_internal_links="${group_k[4]}"
 
+    if [ ! -d /home/max/WORK/masterthesis/mini_internet/router_files/netflow_mini-internet/AS_${group_number} ]; then
+        mkdir -p /home/max/WORK/masterthesis/mini_internet/router_files/netflow_mini-internet/AS_${group_number}
+    fi
+
     if [ "${group_as}" != "IXP" ];then
 
         readarray routers < "${DIRECTORY}"/config/$group_router_config
@@ -48,11 +56,13 @@ for ((k=0;k<group_numbers;k++));do
             router_i=(${routers[$i]})
             rname="${router_i[0]}"
 
-	    docker exec -ti "${group_number}"_"${rname}"router /usr/sbin/init-nf.sh "${group_number}"_"${rname}"router $NETFLOW_DIR $NETFLOW_ROTATE_INTERVAL $NETFLOW_SAMPLING
+            # docker exec -ti "${group_number}"_"${rname}"router /usr/sbin/init-nf.sh "${group_number}"_"${rname}"router $NETFLOW_DIR $NETFLOW_ROTATE_INTERVAL $NETFLOW_SAMPLING ${group_number}
+            # docker exec -ti "${group_number}"_"${rname}"router /usr/sbin/init-nf.sh "${group_number}"_"${rname}"router "${NETFLOW_DIR}" $NETFLOW_ROTATE_INTERVAL $NETFLOW_SAMPLING $group_number
+            docker exec -ti "${group_number}"_"${rname}"router /home/router_files/init-nf.sh "${group_number}"_"${rname}"router "${NETFLOW_DIR}" $NETFLOW_ROTATE_INTERVAL $NETFLOW_SAMPLING $group_number
         done
 
     else # If IXP
-	docker exec -ti "${group_number}"_IXP /usr/sbin/init-nf.sh "${group_number}"_IXP $NETFLOW_DIR $NETFLOW_ROTATE_INTERVAL $NETFLOW_SAMPLING
+    docker exec -ti "${group_number}"_IXP /user/sbin/init-nf.sh "${group_number}"_IXP $NETFLOW_DIR $NETFLOW_ROTATE_INTERVAL $NETFLOW_SAMPLING ${group_number}
     fi
 done
 

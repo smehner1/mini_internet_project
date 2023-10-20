@@ -73,8 +73,8 @@ do
 			        touch ${file}.txt
 			        touch ${file}.csv.gz
     			    chmod ugo+r -R ${file} ${file}.txt ${file}.csv.gz
-                    nfdump -r "${file}" -o csv | gzip -9 > "${file}".csv.gz &
-			        nfdump -r "${file}" -o line > "${file}".txt &
+                    nfdump -a -r "${file}" -o csv | gzip -9 > "${file}".csv.gz &
+			        nfdump -a -r "${file}" -o line > "${file}".txt &
                 fi
         done
         wait

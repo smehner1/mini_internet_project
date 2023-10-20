@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 RUN apt-get update && apt-get install -y rsyslog locales bind9 bind9utils bind9-doc dnsutils \
   iputils-ping inetutils-traceroute vim net-tools tcpdump
 

@@ -3,7 +3,7 @@
 LOG_FILE="./stats/disk_usage.csv"
 
 SLEEP=86400 # 1 day = 24* 60 *60
-DEVICE="/var/www/html"
+DEVICE="/dev/sda2"
 DATE_FORMAT="%Y-%m-%d" #_%H-%M-%S" 
 
 while true
@@ -16,8 +16,8 @@ do
 
     echo "$current_date $disk_usage $inode_usage" >> "$LOG_FILE"
 
-    ./utils/plot_disk_usage.py
-    sudo chown www-data:www-data /var/www/html/stats/disk_usage.png
+    /home/max/WORK/masterthesis/miniconda3/envs/mini/bin/python3 ./utils/plot_disk_usage.py
+    sudo chown www-data:www-data /home/max/WORK/disk_usage.png
 
     echo "sleep"
     sleep $SLEEP
