@@ -40,22 +40,6 @@ RUN apt-get install -y zlib1g
 RUN apt-get install -y flow-tools
 RUN apt-get install libz-dev
 
-
-# install Harpoon Tool for Traffic generation
-# RUN apt-get install -y libexpat1
-# RUN apt-get install -y libexpat1-dev
-
-# RUN mkdir harpoon
-# RUN git clone https://github.com/jsommers/harpoon.git /harpoon
-# WORKDIR /harpoon
-# RUN ./configure
-# RUN make
-# RUN make selfconf
-# RUN make install
-
-# RUN rm cli/stats.py
-# RUN rm selfconf/harpoon_reconf.py
-
 RUN mkdir -p /home/host_files
 RUN chmod 777 -R /home/host_files
 

@@ -13,12 +13,12 @@ def init_parser() -> argparse.ArgumentParser:
     parser.add_argument('--minidir',
                         help='path to directory of mini internet',
                         type=str,
-                        default='/home/max/WORK/mini-internet/',
+                        default='../../mini-internet/',
                         )
     parser.add_argument('--netflowdir',
                         help='directory that includes the netflow',
                         type=str,
-                        default='/home/max/WORK/masterthesis/mini_internet/router_files/netflow_mini-internet',
+                        default='.:/../shared_directories/router_files/netflow_mini-internet',
                         )
     parser.add_argument('-i',
                         help='interval of garbage collection in hours',

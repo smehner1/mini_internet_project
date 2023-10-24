@@ -113,6 +113,8 @@ for ((k=0;k<group_numbers;k++)); do
 
             location="${DIRECTORY}"/groups/g"${group_number}"/"${rname}"
 
+            cur_loc=$(pwd)
+
             # start router
             docker run -itd --net='none' --privileged --dns="${subnet_dns%/*}" \
                 --name="${group_number}"_"${rname}"router \
@@ -132,7 +134,7 @@ for ((k=0;k<group_numbers;k++)); do
                 --cap-add=ALL \
                 --cap-drop=SYS_RESOURCE \
                 --cpus=2 --pids-limit 3000 --hostname "${rname}"_router \
-                --mount type=bind,source=/home/max/WORK/masterthesis/mini_internet/router_files,target=/home/router_files \
+                --mount type=bind,source=${cur_loc}/../../shared_directories/router_files,target=/home/router_files \
                 -v "${location}"/looking_glass.txt:/home/looking_glass.txt \
                 -v "${location}"/looking_glass_json.txt:/home/looking_glass_json.txt \
                 -v "${location}"/daemons:/etc/frr/daemons \
@@ -151,7 +153,7 @@ for ((k=0;k<group_numbers;k++)); do
                     --sysctl net.ipv4.icmp_echo_ignore_broadcasts=0 \
                     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
                     --sysctl net.ipv6.icmp.ratelimit=0 \
-                    --mount type=bind,source=/home/max/WORK/masterthesis/mini_internet/host_files,target=/home/host_files \
+                    --mount type=bind,source=${cur_loc}/../../shared_directories/host_files,target=/home/host_files \
                     -v /etc/timezone:/etc/timezone:ro \
                     -v /etc/localtime:/etc/localtime:ro $dname
                     # add this for bgpsimple -v ${DIRECTORY}/docker_images/host/bgpsimple.pl:/home/bgpsimple.pl \

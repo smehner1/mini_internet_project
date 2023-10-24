@@ -1,9 +1,16 @@
 # !/bin/bash
 
+# Author: Max Bergmann
+
+
+CONDA=$1
+PYTHON=${CONDA}/envs/mini/bin/python3
+
+location=$((pwd))
+MINIDIR=${location}/../../  # directory of the Mini-Internet
+NETFLOWDIR=${location}/../../shared_directories/router_files/netflow_mini-internet  # directory that includes the netflow
+
 INTERVAL=3600  # collect every hour the garbage
-PYTHON="/home/max/WORK/masterthesis/miniconda3/envs/mini/bin/python3"
-MINIDIR="/home/max/WORK/mini-internet/"    # interval of garbage collection in hours
-NETFLOWDIR="/home/max/WORK/masterthesis/mini_internet/router_files/netflow_mini-internet"  # directory that includes the netflow
 
 # read possible flags, otherwise use default values
 while getopts "i:p:m:n" OPTION; do

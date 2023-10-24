@@ -38,18 +38,14 @@ for iface in $INTERFACES; do
     # Start netflow capture to collect netflow sent by the fprobes
     # nfcapd -T +1,+4,+5,+10,+11,+13 -p ${PORT_NUM} -I "${ROUTERNAME}-port-${iface}" -l $OUTDIR -s $NETFLOW_SAMPLING -S 1 -D -t $NETFLOW_ROTATE_INTERVAL -P /var/run/nfcapd-$PORT_NUM.pid
     # nfcapd -T +1,+4,+5,+10,+11,+13 -p ${PORT_NUM} -I "${ROUTERNAME}-port-${iface}" -l $OUTDIR -s 1 -S 1 -D -t $NETFLOW_ROTATE_INTERVAL -P /var/run/nfcapd-$PORT_NUM.pid
+    # TODO: change parameters here to increase flow generation
     nfcapd -T +1,+4,+5,+10,+11,+13 -p ${PORT_NUM} -I "${ROUTERNAME}-port-${iface}" -l $OUTDIR -s 1 -S 1 -D -t 15 -P /var/run/nfcapd-$PORT_NUM.pid
 
     # fprobe cannot even mark the packet direction (in/out)
     # fix: filter by interface mac and tag with -x
     iface_mac=$(cat /sys/class/net/$iface/address)
+    # TODO: change parameters here to increase flow generation
     fprobe -i $iface -e 30 -d 10 -g 10 -q 900 -s 1 localhost:$PORT_NUM
-    # outgoing traffic
-    # fprobe -x1:2 -i $iface -f "src net 2.0.0.0/8" localhost:$PORT_NUM
-    # fprobe -x1:2 -i $iface -s 1 -f "ether src ${iface_mac}" localhost:$PORT_NUM
-    # incoming traffic
-    # fprobe -x2:1 -i $iface -f "dst net 2.0.0.0/8" localhost:$PORT_NUM
-    # fprobe -x2:1 -i $iface -s 1 -f "ether dst ${iface_mac}" localhost:$PORT_NUM
 
     PORT_NUM=$((PORT_NUM+1))
 done
