@@ -11,14 +11,14 @@ def init_parser() -> argparse.ArgumentParser:
     '''initializes a parser for the CLI'''
     parser = argparse.ArgumentParser()
     parser.add_argument('--minidir',
-                        help='path to directory of mini internet',
+                        help='path to directory of mini internet (platform directory)',
                         type=str,
-                        default='../../mini-internet/',
+                        default='../',
                         )
     parser.add_argument('--netflowdir',
                         help='directory that includes the netflow',
                         type=str,
-                        default='.:/../shared_directories/router_files/netflow_mini-internet',
+                        default='../../shared_directories/router_files/netflow_mini-internet',
                         )
     parser.add_argument('-i',
                         help='interval of garbage collection in hours',

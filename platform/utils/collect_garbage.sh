@@ -7,8 +7,8 @@ CONDA=$1
 PYTHON=${CONDA}/envs/mini/bin/python3
 
 location=$((pwd))
-MINIDIR=${location}/../../  # directory of the Mini-Internet
-NETFLOWDIR=${location}/../../shared_directories/router_files/netflow_mini-internet  # directory that includes the netflow
+# MINIDIR=${location}/../../  # directory of the Mini-Internet
+# NETFLOWDIR=${location}/../../shared_directories/router_files/netflow_mini-internet  # directory that includes the netflow
 
 INTERVAL=3600  # collect every hour the garbage
 
@@ -49,10 +49,8 @@ while :
 do
     echo
     start=`date +%s`
-    $PYTHON $FILE_PATH/garbage_collector.py \
-        --minidir $MINIDIR \
-        --netflowdir $NETFLOWDIR \
-        -i 1
+    # echo $FILE_PATH
+    $PYTHON utils/garbage_collector.py -i 1
     end=`date +%s`
 
     exec_time=$((end-start))

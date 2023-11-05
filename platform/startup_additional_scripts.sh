@@ -1,5 +1,7 @@
 #!/bin/bash
 
+miniconda=$1
+
 KILL=0
 
 if [ $1 == "kill" ]; then
@@ -29,7 +31,7 @@ for serv in collect_garbage monitor_inodes_docker monitor_disk_usage; do
         else
             echo $serv not found
             echo " - start $serv screen session with ./utils/$serv.sh"
-            sudo screen -d -m -S $serv bash -c "source ./utils/$serv.sh"
+            sudo screen -d -m -S $serv bash -c "source ./utils/$serv.sh $miniconda"
         fi
     fi
 done
