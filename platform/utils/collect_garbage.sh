@@ -4,7 +4,7 @@
 
 
 CONDA=$1
-PYTHON=${CONDA}/envs/mini/bin/python3
+PYTHON=${CONDA}/envs/mini-ipd/bin/python3
 
 location=$((pwd))
 # MINIDIR=${location}/../../  # directory of the Mini-Internet
