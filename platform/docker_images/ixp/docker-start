@@ -21,4 +21,6 @@ ovs-ofctl add-flow IXP action=NORMAL
 chmod 0755 /home/.looking_glass.sh
 /home/.looking_glass.sh &
 
+vtysh -c 'conf t' -c 'dump bgp updates /home/bgpdump/updates/updates.%Y%m%d-%H%M 30m' -c 'dump bgp routes-mrt /home/bgpdump/ribs/rib.%Y%m%d-%H%M 30m'
+
 tail -f /dev/null # To keep the container running forever

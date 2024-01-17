@@ -1,9 +1,20 @@
-FROM debian:stretch
+FROM debian:buster
+
+# RUN sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list
+# RUN sed -i 's|security.debian.org|archive.debian.org|g' /etc/apt/sources.list 
+# RUN sed -i '/stretch-updates/d' /etc/apt/sources.list
+
+RUN touch /etc/default/locale
+RUN echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
+RUN echo "LANG=en_US.UTF-8" >> /etc/default/locale
+RUN echo "LANGUAGE=en_US.UTF-8" >> /etc/default/locale
+
+RUN echo "LC_ALL=en_US.UTF-8" >> /etc/environment
+RUN echo "LANG=en_US.UTF-8" >> /etc/environment
+RUN echo "LANGUAGE=en_US.UTF-8" >> /etc/environment
 
 # Install dependencies
-RUN apt-get update
-RUN apt-get install -y \
-    build-essential \
+RUN apt-get update && apt-get install -y build-essential \
     git \
     rsyslog \
     locales \
@@ -46,7 +57,9 @@ RUN apt-get install -y \
     python3-sphinx \
     libsnmp-dev \
     libsystemd-dev \
-    libcap-dev
+    libcap-dev \
+    python3
+
 
 # Prepare libyang installation
 RUN mkdir /libyang
@@ -78,13 +91,13 @@ WORKDIR /libyang/build
 # As a reference, previously we used libyang devel branch commit 27f0eb9bc5a3dd7fac5b40cf9ca8335505b7a0ad (v 1.0.228)
 RUN git checkout v1.0.240
 RUN cmake -DENABLE_LYD_PRIV=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr -D CMAKE_BUILD_TYPE:String="Release" ..
-RUN make
+RUN make -j16
 RUN make install
 RUN ldconfig
 WORKDIR /frr
 
 RUN ./configure --enable-exampledir=/usr/share/doc/frr/examples/ --localstatedir=/var/opt/frr --enable-user=frr --enable-group=frr --enable-vty-group=frrvty --disable-doc --localstatedir=/var/run/frr --sbindir=/usr/lib/frr --sysconfdir=/etc/frr --enable-systemd
-RUN make
+RUN make -j16
 RUN make check
 RUN make install
 
@@ -116,9 +129,25 @@ RUN echo include /usr/local/lib >> /etc/ld.so.conf
 RUN ldconfig
 
 RUN mkdir -p /root/.ssh
+RUN mkdir -p /home/bgpdump/ribs
+RUN mkdir -p /home/bgpdump/updates 
+# RUN mkdir -p /home/netflow
+RUN mkdir -p /home/router_files
+RUN chmod 777 -R /home/router_files
+
+RUN chmod 777 -R /home/bgpdump/
+
+RUN apt-get install -y ufw
+RUN apt-get install -y iptables
+ADD garbage_collector.sh /home/garbage_collector.sh
+
+# nfdump
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y  nfdump fprobe
 
 # Add startup script and set it as entrypoint
 COPY docker-start /usr/sbin/docker-start
+COPY init-nf.sh /usr/sbin/init-nf.sh
+# COPY init-nf.sh /home/netflow_mini-internet/init-nf.sh
 COPY looking_glass.sh /home/.looking_glass.sh
 RUN chmod +x /usr/sbin/docker-start
 ENTRYPOINT ["/usr/sbin/docker-start"]

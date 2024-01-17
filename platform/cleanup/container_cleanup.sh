@@ -64,7 +64,6 @@ for ((k=0;k<group_numbers;k++)); do
 
                 # kill hosts
                 for ((l=0;l<n_l2_hosts;l++)); do
-
                     host_l=(${l2_hosts[$l]})
                     hname="${host_l[0]}"
                     l2name="${host_l[2]}"

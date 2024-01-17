@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 RUN apt-get update && apt-get install -y rsyslog locales iputils-ping inetutils-traceroute openssh-server \
   openvswitch-switch openvswitch-common vim tcpdump net-tools dnsutils
 

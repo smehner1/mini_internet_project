@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:buster
 RUN apt-get update && apt-get install -y rsyslog locales iputils-ping openssh-server nmap net-tools tmux vim
 
 # Set locale

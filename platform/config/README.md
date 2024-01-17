@@ -1,21 +1,19 @@
-# The mini-Internet topology
+#### Additional topologies
 
-This directory contains the configuration files which define the topology used when building the mini-Internet (by default the topology is the one we  used in 2020).
-The files `layer2_hosts_config.txt`, `layer2_switches_config.txt` and `layer2_links_config.txt` define the L2 topology in transit ASes.
-The L2 topology we used for transit ASes is the following one:
+In this directory, we provide configuration files to build the topology we used
+in the 2020 iteration of the project. We provide configuration files for different
+sizes of the mini-Internet.
 
-<img src="figures/l2-network.png" width="600" />
+Please look at the 2020 assignment [text](https://github.com/nsg-ethz/mini_internet_project/blob/master/2020_assignment_eth/routing_project.pdf)
+or in the [config](../config) directory to see how the L2, L3 and AS-level topologies look like.  
 
-The files `layer2_hosts_config_empty.txt`, `layer2_switches_config_empty.txt` and `layer2_links_config_empty.txt` define the L2 topology in the Tier1 and Stub ASes. They are empty, meaning that Tier1 and Stub ASes do not have a L2 network.
+If you want to quickly try the mini-Internet on a small server/VM, you may want to try the topologies with 1 or 2 ASes.
+To do this, just run the following commands if you want to use the 1-AS topology:
 
-The files `router_config_full.txt` and `internal_links_config_full.txt` define the L3 topology in transit ASes.
-The L3 topology and the IP address allocation scheme for transit ASes is depicted in the figure below.
+```
+cp external_links_config_1.txt ../config/external_links_config.txt
+cp AS_config_1.txt ../config/AS_config.txt
+```
 
-<img src="figures/l3-network.png" width="800">
-
-The files `router_config_small.txt` and `internal_links_config_small.txt` define the L3 topology in Tier1 and Stub ASes.
-For these ASes, the L3 topology only contains two routers.
-
-Finally, by default a mini-Internet with 20 ASes is built. The figure below depicts the AS-level topology. There are Tier1 ASes, transit ASes, Stub ASes, as well as IXPs. ASes and IXPs are interconnected via peer-2-peer links or provider/customer links.
-
-<img src="figures/aslevel-crop.png" width="500">
+In the topology with 2 ASes, the two ASes are connected via the router ZURI, see `external_links_config_2.txt`.
+If you want to try a larger mini-Internet, you may want to use the topology with 40 or 60 ASes.

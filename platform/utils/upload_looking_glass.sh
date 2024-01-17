@@ -13,9 +13,10 @@ set -o nounset
 readarray groups < config/AS_config.txt
 group_numbers=${#groups[@]}
 
+WEBSERVER_LOCATION="/var/www/html"
+
 while true
 do
-    # mkdir tmp
     for ((k=0;k<group_numbers;k++)); do
         group_k=(${groups[$k]})
         group_number="${group_k[0]}"
@@ -23,12 +24,12 @@ do
         group_config="${group_k[2]}"
         group_router_config="${group_k[3]}"
 
+        mkdir -p $WEBSERVER_LOCATION/looking_glass/G$group_number
+        
         if [ "${group_as}" != "IXP" ];then
 
             readarray routers < config/$group_router_config
             n_routers=${#routers[@]}
-
-            mkdir G$group_number
 
             for ((i=0;i<n_routers;i++)); do
                 router_i=(${routers[$i]})
@@ -36,25 +37,18 @@ do
                 property1="${router_i[1]}"
                 property2="${router_i[2]}"
 
-                cp groups/g${group_number}/${rname}/looking_glass.txt G$group_number/${rname}.txt
-                cp groups/g${group_number}/${rname}/looking_glass_json.txt G$group_number/${rname}_json.txt
+		        cp groups/g${group_number}/${rname}/looking_glass.txt $WEBSERVER_LOCATION/looking_glass/G$group_number/${rname}.txt
 
                 echo $group_number $rname
             done
-            scp -r G$group_number thomahol@virt07.ethz.ch:/home/web_commnet/public_html/routing_project/looking_glass/
-
-            rm -r G$group_number
-            echo $group_number done
-        else
-            mkdir G$group_number
-
-            cp groups/g${group_number}/looking_glass.txt G$group_number/LG.txt
-
-            scp -r G$group_number thomahol@virt07.ethz.ch:/home/web_commnet/public_html/routing_project/looking_glass/
-
-            rm -r G$group_number
-            echo $group_number done
+	    else
+	        cp groups/g${group_number}/looking_glass.txt $WEBSERVER_LOCATION/looking_glass/G$group_number/IXP.txt
         fi
+
+        chown -R www-data:www-data $WEBSERVER_LOCATION/looking_glass/
+        find $WEBSERVER_LOCATION/looking_glass/ -type d -exec chmod 755 {} \;
+        find $WEBSERVER_LOCATION/looking_glass/ -type f -exec chmod 644 {} \;
+        echo $group_number done
     done
-    sleep 120
+    sleep 60
 done

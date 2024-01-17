@@ -1,3 +1,4 @@
-UNIV    CERN    GENE    11:11:11:11:11:11   1
-UNIV    ETHZ    ZURI	22:22:22:22:22:22  2
-UNIV    EPFL    N/A     33:33:33:33:33:33   3
+BTU    ZENT    COTT    11:11:11:11:11:11   1
+BTU    NORD    N/A     22:22:22:22:22:22   2
+BTU    SACH    N/A     33:33:33:33:33:33   3
+BTU    SENF    N/A     44:44:44:44:44:44   4
