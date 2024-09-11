@@ -89,4 +89,5 @@ docker kill MEASUREMENT &>/dev/null || true &
 docker kill MATRIX &>/dev/null || true &
 
 wait
-docker system prune -f
+# WARNING: remove all stopped containers, unused networks, dangling images, unused build cache
+docker system prune
