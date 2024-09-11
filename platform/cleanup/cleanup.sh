@@ -17,8 +17,8 @@ DIRECTORY="$1"
 # kill all container
 ./cleanup/container_cleanup.sh "${DIRECTORY}"
 
-# remove all container & restart docker
-docker system prune -f
+# WARNING: remove all stopped containers, unused networks, dangling images, unused build cache & restart docker
+docker system prune
 
 echo -n "ovs-vsctl " > ovs_command.txt
 

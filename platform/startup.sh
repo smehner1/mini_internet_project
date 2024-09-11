@@ -5,8 +5,9 @@
 FORCE_REMOVE_ALL=0
 
 if [ $FORCE_REMOVE_ALL == 1 ]; then
-    sudo docker system prune  --all --force
-    sudo docker image prune  --all --force
+    # WARNING: remove all stopped containers, unused networks, dangling images, unused build cache
+    sudo docker system prune  --all
+    sudo docker image prune  --all
 
     echo ""
     echo ""

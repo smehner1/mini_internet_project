@@ -8,8 +8,8 @@ for container in `docker ps -q`; do
 done
 wait
 
-# remove all container & restart docker
-docker system prune -f
+# WARNING: remove all stopped containers, unused networks, dangling images, unused build cache & restart docker
+docker system prune
 service docker restart
 
 # remove all ovs-bridges
